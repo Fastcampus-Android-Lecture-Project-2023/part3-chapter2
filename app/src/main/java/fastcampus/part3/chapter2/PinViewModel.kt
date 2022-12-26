@@ -27,5 +27,6 @@ class PinViewModel : ViewModel() {
 
     fun done() {
         password.replace(0, password.length, "")
+        _passwordLiveData.value = password.toString()
     }
 }
