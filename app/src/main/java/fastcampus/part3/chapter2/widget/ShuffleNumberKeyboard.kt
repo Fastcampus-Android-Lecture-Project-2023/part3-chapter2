@@ -3,6 +3,7 @@ package fastcampus.part3.chapter2.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.GridLayout
 import android.widget.TextView
 import androidx.core.view.children
@@ -11,20 +12,30 @@ import kotlin.random.Random
 
 class ShuffleNumberKeyboard @JvmOverloads
 constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
-    GridLayout(context, attrs, defStyleAttr) {
+    GridLayout(context, attrs, defStyleAttr) , View.OnClickListener{
 
     private var _binding: WidgetShuffleNumberKeyboardBinding? = null
     private val binding get() = _binding!!
 
+    private var keyPadListener: KeyPadListener? = null
+
     init {
         _binding =
             WidgetShuffleNumberKeyboardBinding.inflate(LayoutInflater.from(context), this, true)
+        binding.view = this
+        binding.clickListener = this
         shuffle()
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         _binding = null
+    }
+
+    override fun onClick(v: View) {
+        if (v is TextView && v.tag != null) {
+            keyPadListener?.onClickNum(v.text.toString())
+        }
     }
 
     fun shuffle() {
@@ -40,5 +51,23 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
                 keyNumberArr.removeAt(randIndex)
             }
         }
+    }
+
+    fun setKeyPadListener(keyPadListener: KeyPadListener) {
+        this.keyPadListener = keyPadListener
+    }
+
+    fun onClickDelete() {
+        keyPadListener?.onClickDelete()
+    }
+
+    fun onClickDone() {
+        keyPadListener?.onClickDone()
+    }
+
+    interface KeyPadListener {
+        fun onClickNum(num: String)
+        fun onClickDelete()
+        fun onClickDone()
     }
 }
