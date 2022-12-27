@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="본인 확인을 위해 이름을 입력해주세요."
+            android:text="본인 확인을 위해 정보를 입력해주세요."
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -49,7 +49,9 @@
                     android:id="@+id/phoneLayout"
                     style="@style/Widget.App.TextInputLayout.Clear"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/phoneEdit"
@@ -68,7 +70,9 @@
                     android:id="@+id/telecomLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -83,6 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:chipSpacingHorizontal="8dp"
+                        app:selectionRequired="true"
                         app:singleSelection="true">
 
                         <com.google.android.material.chip.Chip
@@ -127,7 +132,9 @@
                     android:id="@+id/genderLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -142,6 +149,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         app:chipSpacingHorizontal="8dp"
+                        app:selectionRequired="true"
                         app:singleSelection="true">
 
                         <com.google.android.material.chip.Chip
@@ -157,45 +165,45 @@
                             android:text="여자" />
 
                     </com.google.android.material.chip.ChipGroup>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/birthdayLayout"
-                        style="@style/Widget.App.TextInputLayout.Clear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/birthdayEdit"
-                            style="@style/Widget.App.TextInputEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="생년월일"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:maxLength="8"
-                            tools:text="19870302" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/nameLayout"
-                        style="@style/Widget.App.TextInputLayout.Clear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/nameEdit"
-                            style="@style/Widget.App.TextInputEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="이름"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:nextFocusDown="@id/birthdayEdit"
-                            tools:text="이름" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/birthdayLayout"
+                    style="@style/Widget.App.TextInputLayout.Clear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/birthdayEdit"
+                        style="@style/Widget.App.TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="생년월일"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        tools:text="19870302" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/nameLayout"
+                    style="@style/Widget.App.TextInputLayout.Clear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/nameEdit"
+                        style="@style/Widget.App.TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="이름"
+                        android:imeOptions="actionNext"
+                        tools:text="이름" />
+
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
         </ScrollView>
 
