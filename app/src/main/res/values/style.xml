@@ -22,10 +22,13 @@
     </style>
 
 
-    <style name="Widget.App.TextInputLayout.Clear" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="boxBackgroundColor">@null</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Widget.App.TextInputLayout.Clear" parent="Widget.App.TextInputLayout">
         <item name="endIconMode">clear_text</item>
         <item name="errorIconDrawable">@null</item>
         <item name="boxStrokeWidth">0dp</item>

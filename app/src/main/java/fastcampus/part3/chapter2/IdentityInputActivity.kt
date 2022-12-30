@@ -1,18 +1,18 @@
 package fastcampus.part3.chapter2
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import fastcampus.part3.chapter2.databinding.ActivityIdentityInputBinding
+import fastcampus.part3.chapter2.util.ViewUtil.closeKeyboard
+import fastcampus.part3.chapter2.util.ViewUtil.setOnEditorActionListener
+import fastcampus.part3.chapter2.util.ViewUtil.showKeyboard
+import fastcampus.part3.chapter2.util.ViewUtil.showKeyboardDelay
 
 class IdentityInputActivity : AppCompatActivity() {
-
-
     private lateinit var binding: ActivityIdentityInputBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +24,7 @@ class IdentityInputActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        binding.view = this
         with(binding) {
             nameEdit.setOnEditorActionListener(EditorInfo.IME_ACTION_NEXT) {
                 if (validName()) {
@@ -119,38 +120,7 @@ class IdentityInputActivity : AppCompatActivity() {
             return
         }
 
-
-    }
-
-    private fun EditText.setOnEditorActionListener(action: Int, invoke: () -> Unit) {
-        setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == action) {
-                invoke()
-                true
-            } else {
-                false
-            }
-        }
-    }
-
-    private fun EditText.showKeyboard() {
-        this.requestFocus()
-        val inputMethodManager =
-            this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-    }
-
-    private fun EditText.showKeyboardDelay() {
-        postDelayed({
-            showKeyboard()
-        }, 200)
-    }
-
-    private fun EditText.closeKeyboard() {
-        this.clearFocus()
-        val inputMethodManager =
-            this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(this.windowToken, 0)
+        startActivity(Intent(this, VerifyOtpActivity::class.java))
     }
 
     private fun validName() = !binding.nameEdit.text.isNullOrBlank()
