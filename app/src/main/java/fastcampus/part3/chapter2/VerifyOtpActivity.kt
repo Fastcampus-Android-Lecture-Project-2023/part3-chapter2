@@ -7,14 +7,16 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import fastcampus.part3.chapter2.databinding.ActivityVerifySmsBinding
+import com.google.android.gms.auth.api.phone.SmsRetriever
+import fastcampus.part3.chapter2.databinding.ActivityVerifyOtpBinding
 import fastcampus.part3.chapter2.util.ViewUtil.setOnEditorActionListener
 import fastcampus.part3.chapter2.util.ViewUtil.showKeyboardDelay
 
-class VerifyOtpActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityVerifySmsBinding
+class VerifyOtpActivity : AppCompatActivity(), AuthOtpReceiver.OtpReceiveListener {
+    private lateinit var binding: ActivityVerifyOtpBinding
 
-    private var timer: CountDownTimer? = object : CountDownTimer((3 * 60 * 1000).toLong(), 1000) {
+    private var smsReceiver: AuthOtpReceiver? = null
+    private var timer: CountDownTimer? = object : CountDownTimer((3 * 60 * 1000).toLong() , 1000) {
         @SuppressLint("SetTextI18n")
         override fun onTick(millisUntilFinished: Long) {
             val min = (millisUntilFinished / 1000) / 60
@@ -35,7 +37,7 @@ class VerifyOtpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityVerifySmsBinding.inflate(layoutInflater)
+        binding = ActivityVerifyOtpBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
     }
@@ -43,10 +45,12 @@ class VerifyOtpActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         binding.otpCodeEdit.showKeyboardDelay()
+        startSmsRetriever()
     }
 
     override fun onDestroy() {
         clearTimer()
+        stopSmsRetriever()
         super.onDestroy()
     }
 
@@ -56,13 +60,18 @@ class VerifyOtpActivity : AppCompatActivity() {
         with(binding) {
             otpCodeEdit.doAfterTextChanged {
                 if (otpCodeEdit.length() >= 6) {
-
+                    stopTimer()
+                    Toast.makeText(this@VerifyOtpActivity, "인증이 완료 되었습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
             otpCodeEdit.setOnEditorActionListener(EditorInfo.IME_ACTION_DONE) {
                 // do not use
             }
         }
+    }
+
+    override fun onOtpReceived(otp: String) {
+        binding.otpCodeEdit.setText(otp)
     }
 
     private fun startTimer() {
@@ -76,6 +85,30 @@ class VerifyOtpActivity : AppCompatActivity() {
     private fun clearTimer() {
         stopTimer()
         timer = null
+    }
+
+    private fun startSmsRetriever() {
+        SmsRetriever.getClient(this).startSmsRetriever().also { task ->
+            task.addOnSuccessListener {
+                if (smsReceiver == null) {
+                    smsReceiver = AuthOtpReceiver().apply {
+                        setOtpListener(this@VerifyOtpActivity)
+                    }
+                }
+                registerReceiver(smsReceiver, smsReceiver!!.doFilter())
+            }
+
+            task.addOnFailureListener {
+                stopSmsRetriever()
+            }
+        }
+    }
+
+    private fun stopSmsRetriever() {
+        if (smsReceiver != null) {
+            unregisterReceiver(smsReceiver)
+            smsReceiver = null
+        }
     }
 
 }

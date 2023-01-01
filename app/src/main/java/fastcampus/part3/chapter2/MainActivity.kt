@@ -3,7 +3,9 @@ package fastcampus.part3.chapter2
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import fastcampus.part3.chapter2.databinding.ActivityMainBinding
+import fastcampus.part3.chapter2.util.AppSignatureHelper
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -13,6 +15,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.view = this
+
+        AppSignatureHelper(this).also {
+            Log.d("hyo","hashKey : ${it.hashKey}")
+            Log.d("hyo","appSignature : ${it.appSignature}")
+        }
     }
 
     fun openShuffle() {
