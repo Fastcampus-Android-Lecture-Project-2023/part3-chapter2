@@ -8,7 +8,12 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
 
-//0QaSrUKkEGq
+/**
+ * 0QaSrUKkEGq
+ * 1. 문자내용이 140byte를 초과하면안된다.
+ * 2. SMS 맨앞에 <#>가 반드시 포함되어야 한다.
+ * 3. SMS 맨마지막에 앱을 식별하는11글자 해시문자열을 포함해야한다.
+ */
 class AuthOtpReceiver : BroadcastReceiver() {
 
     private var otpReceiver: OtpReceiveListener? = null
