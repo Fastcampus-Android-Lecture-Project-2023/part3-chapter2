@@ -15,6 +15,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.view = this
+        AppSignatureHelper(this).apply {
+            Log.d("hash", "hash : ${appSignature}")
+        }
     }
 
     fun openShuffle() {

@@ -26,9 +26,10 @@
                 android:value="" />
         </activity>
         <activity android:name="fastcampus.part3.chapter2.PinActivity" />
-        <activity android:name="fastcampus.part3.chapter2.IdentityInputActivity"
+        <activity
+            android:name="fastcampus.part3.chapter2.IdentityInputActivity"
             android:configChanges="keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name="fastcampus.part3.chapter2.VerifyOtpActivity" />
     </application>
 
